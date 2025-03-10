@@ -40,7 +40,7 @@ const WeatherApp = () => {
   };
   const search = async (city) => {
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
         import.meta.env.VITE_APP_ID
       }`;
       const response = await fetch(url);
@@ -51,7 +51,7 @@ const WeatherApp = () => {
       console.log(data);
 
       setWeatherData({
-        humidity: data.main.humidity,
+        temprature: data.main.temp,
         location: data.name,
         icon: icon,
       });
@@ -61,13 +61,13 @@ const WeatherApp = () => {
     search(locname);
   }, [locname]);
   return (
-    <div className="place-self-center mt-40 bg-[#00aeff] rounded-2xl w-100 h-100 flex flex-col jus">
-      <h1 className="flex justify-center p-5 font-bold text-black">
+    <div className="place-self-center mt-40 bg-[#00aeff] rounded-2xl w-100 h-100 flex flex-col ">
+      <h1 className="flex justify-center p-5 text-2xl font-bold text-black">
         Weather App
       </h1>
       <div className="flex justify-center ml-5">
         <input
-          className="text-black border-1 rounded-2xl px-2 border-black"
+          className="text-black border-1 rounded-lg px-2 border-black"
           type="text"
           placeholder="Search"
           onChange={hand}
@@ -76,7 +76,7 @@ const WeatherApp = () => {
       </div>
       <div className="flex flex-col items-center">
         <img src={weatherData.icon} className="w-2/5 " alt="" />
-        <h1>{weatherData.humidity}</h1>
+        <h1>{weatherData.temprature}</h1>
         <p>{weatherData.location}</p>
       </div>
     </div>
