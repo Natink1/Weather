@@ -7,11 +7,29 @@ import humidity_icon from "../Assets/humidity.png";
 import rain_icon from "../Assets/rain.png";
 import snow_icon from "../Assets/snow.png";
 import wind_icon from "../Assets/wind.png";
+import cloud_icon from "../Assets/cloud.png";
 
 const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState(false);
   const [locname, setLocname] = useState("");
   const [dat, setdat] = useState("");
+
+  const allIcons = {
+    "01d": clear_icon,
+    "01n": clear_icon,
+    "02d": cloud_icon,
+    "02n": cloud_icon,
+    "03d": cloud_icon,
+    "03n": cloud_icon,
+    "04d": drizzle_icon,
+    "04n": drizzle_icon,
+    "09d": rain_icon,
+    "09n": rain_icon,
+    "10d": rain_icon,
+    "10n": rain_icon,
+    "13d": snow_icon,
+    "13n": snow_icon,
+  };
 
   const hand = (e) => {
     setdat(e.target.value);
@@ -27,10 +45,15 @@ const WeatherApp = () => {
       }`;
       const response = await fetch(url);
       const data = await response.json();
+
+      const icon = allIcons[data.weather[0].icon] || clear_icon;
+
       console.log(data);
+
       setWeatherData({
         humidity: data.main.humidity,
         location: data.name,
+        icon: icon,
       });
     } catch (error) {}
   };
@@ -48,12 +71,11 @@ const WeatherApp = () => {
           type="text"
           placeholder="Search"
           onChange={hand}
-          
         ></input>
         <img className="pl-3" onClick={sub} src={search_icon} alt=""></img>
       </div>
       <div className="flex flex-col items-center">
-        <img src={clear_icon} className="w-2/5 " alt="" />
+        <img src={weatherData.icon} className="w-2/5 " alt="" />
         <h1>{weatherData.humidity}</h1>
         <p>{weatherData.location}</p>
       </div>
