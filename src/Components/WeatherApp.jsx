@@ -39,21 +39,21 @@ const WeatherApp = () => {
     setLocname(dat);
   };
   const search = async (city) => {
-    try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
+    https: try {
+      const url = `//api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
         import.meta.env.VITE_APP_ID
       }`;
       const response = await fetch(url);
       const data = await response.json();
 
-      const icon = allIcons[data.weather[0].icon] || clear_icon;
+      const icon = allIcons[data.weather[0].icon] || cloud_icon;
 
       console.log(data);
 
       setWeatherData({
         temprature: data.main.temp,
-        location: data.name,
-        icon: icon,
+        city: data.name,
+        ico: icon,
       });
     } catch (error) {}
   };
@@ -75,9 +75,9 @@ const WeatherApp = () => {
         <img className="pl-3" onClick={sub} src={search_icon} alt=""></img>
       </div>
       <div className="flex flex-col items-center">
-        <img src={weatherData.icon} className="w-2/5 " alt="" />
-        <h1>{weatherData.temprature}</h1>
-        <p>{weatherData.location}</p>
+        <img src={weatherData.ico} className="w-2/5 " alt="" />
+        <h1>{weatherData.temprature}°c</h1>
+        <p>{weatherData.city}</p>
       </div>
     </div>
   );
